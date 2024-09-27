@@ -29,16 +29,16 @@ This should generate following Kinds of notices:
 
 
 Example notice:
-------------
+--------------
 
-[ Signature Match ]
+    [ Signature Match ]
 
-1727428593.470887       CCaBx639KU9NNYfEg4      196.226.16.57   38552   129.61.5.5      631     -       -       -       udp     Signatures::Sensitive_Signature 196.226.16.57: LINUX CUPS RCE!!!        0 3 http://194.164.193.43:1234/printers/NAME "Office HQ" "Printer"     196.226.16.57   129.61.5.5      631     -       -       Notice::ACTION_LOG      (empty) 3600.000000     -       -       -       -       -
+    1727428593.470887       CCaBx639KU9NNYfEg4      196.226.16.57   38552   129.61.5.5      631     -       -       -       udp     Signatures::Sensitive_Signature 196.226.16.57: LINUX CUPS RCE!!!        0 3 http://194.164.193.43:1234/printers/NAME "Office HQ" "Printer"     196.226.16.57   129.61.5.5      631     -       -       Notice::ACTION_LOG      (empty) 3600.000000     -       -       -       -       -
 
 
-[ CUPS Attempt ]
+    [ CUPS Attempt ]
 
-1727428803.636599       -       -       -       -       -       -       -       -       -       CUPS::Attempt   CUPS : 196.226.16.57 - Sources : [LINUX CUPS RCE!!! [0 3 http://194.164.193.43:1234/printers/NAME "Office HQ" "Printer"]]      -       196.226.16.57   -       -       -       -       Notice::ACTION_LOG,Notice::ACTION_DROP  (empty) 1800.000000
+    1727428803.636599       -       -       -       -       -       -       -       -       -       CUPS::Attempt   CUPS : 196.226.16.57 - Sources : [LINUX CUPS RCE!!! [0 3 http://194.164.193.43:1234/printers/NAME "Office HQ" "Printer"]]      -       196.226.16.57   -       -       -       -       Notice::ACTION_LOG,Notice::ACTION_DROP  (empty) 1800.000000
 
 -------------
 
