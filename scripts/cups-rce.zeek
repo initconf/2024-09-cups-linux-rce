@@ -73,6 +73,6 @@ hook Notice::policy(n: Notice::Info)
         {
         add n$actions[Notice::ACTION_EMAIL];
         add n$actions[Notice::ACTION_DROP];
-        #Notice::email_notice_to(n, "ir-reports@lbl.gov", T);
+        #Notice::email_notice_to(n, "alerts@yours.org", T);
         }
 }
