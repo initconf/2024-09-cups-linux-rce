@@ -29,7 +29,7 @@ This should generate following Kinds of notices:
 
 
 Example notice:
-***************************
+------------
 
 [ Signature Match ]
 
@@ -40,6 +40,7 @@ Example notice:
 
 1727428803.636599       -       -       -       -       -       -       -       -       -       CUPS::Attempt   CUPS : 196.226.16.57 - Sources : [LINUX CUPS RCE!!! [0 3 http://194.164.193.43:1234/printers/NAME "Office HQ" "Printer"]]      -       196.226.16.57   -       -       -       -       Notice::ACTION_LOG,Notice::ACTION_DROP  (empty) 1800.000000
 
+-------------
 
 
 Example Summary Notice:
