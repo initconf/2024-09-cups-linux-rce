@@ -8,25 +8,12 @@ export {
   	global domain_regex = /[A-Za-z0-9]+([\-\.]{1}[A-Za-z0-9]+)*\.[a-zA-Z]{2,6}\/?[A-Za-z0-9]+/;
         global ip_regex = /([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4}|(([0-9A-Fa-f]{1,4}(:[0-9A-Fa-f]{1,4})*)?)::(([0-9A-Fa-f]{1,4}(:[0-9A-Fa-f]{1,4})*)?)|(([0-9A-Fa-f]{1,4}:){6,6})([0-9]+)\.([0-9]+)\.([0-9]+)\.([0-9]+)|(([0-9A-Fa-f]{1,4}(:[0-9A-Fa-f]{1,4})*)?)::(([0-9A-Fa-f]{1,4}:)*)([0-9]+)\.([0-9]+)\.([0-9]+)\.([0-9]+)|([[:digit:]]{1,3}\.){3}[[:digit:]]{1,3}/ ;
 
-
-
 	 type CallbackParts: record {
                     url: string &default = "";
                     ip: addr &default=0.0.0.0;
                     port_: port &default=0/unknown;
                     domain: string &default ="";
                     };
-
-
-	type cups_attack_mo: record {
-		scanner: addr  &optional;
-		callback_ips: set[addr] &optional;
-		callback_ports: set[port] &optional;
-		callback_domains: set[string] &optional;
-		callback_urls: set[string] &optional;
-		mal_ips: set[addr] &optional;
-		culprit_conn: set[conn_id] &optional;
-	};
 
 	global cups_attack: table[addr] of cups_attack_mo ;
 }
