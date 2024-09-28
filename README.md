@@ -47,6 +47,16 @@ Notice::ACTION_LOG      (empty) 3600.000000     -       -       -       -       
 Also this generates:
 
 ```
+0) Notice:: CUPS::Callback
+
+XXXXXXXXXX.XXXXXX	ClEkJM2Vm5giqnMf4h	198.128.211.166	43058	134.122.95.96	12345	-	-	-	tcp	CUPS::Callback
+URI: 198.128.211.166->134.122.95.96:12345/printers/evilprinter	-	134.122.95.96	134.122.95.96	12345
+Notice::ACTION_EMAIL,Notice::ACTION_DROP,Notice::ACTION_LOG	(empty)	3600.000000
+
+```
+
+
+```
 1) Notice::Signatures::Sensitive_Signature
 
 
