@@ -22,7 +22,7 @@ event CUPS::build_intel (cid: conn_id, payload: CallbackParts)
     {
 		a_item = [$indicator=fmt("%s", payload$ip),
 					$indicator_type = Intel::ADDR,
-					$meta = [$source = "cupsScript", $desc="Scanning IP Address"] ];
+					$meta = [$source = "cupsScript", $desc="Scanning IP Address", $do_notice=T] ];
 
 		Intel::insert(a_item);
 
@@ -38,7 +38,7 @@ event CUPS::build_intel (cid: conn_id, payload: CallbackParts)
 
     # 2. Intel::URL - sensitive_URL
     a_item = [$indicator=fmt("%s", payload$url), $indicator_type = Intel::URL,
-                $meta = [$source = "cupsScript", $desc="URL of cups callback"] ];
+                $meta = [$source = "cupsScript", $desc="URL of cups callback", $do_notice=T] ];
 
     Intel::insert(a_item);
 
@@ -46,11 +46,12 @@ event CUPS::build_intel (cid: conn_id, payload: CallbackParts)
     if (payload?$domain)
     {
     a_item = [$indicator=fmt("%s", payload$domain), $indicator_type =
-            Intel::DOMAIN, $meta = [$source = "cupsScript", $desc="DOMAIN of cups callback"] ];
+            Intel::DOMAIN, $meta = [$source = "cupsScript", $desc="DOMAIN of cups callback", $do_notice=T] ];
 
     Intel::insert(a_item);
 
     }
+
 
 #    # 4. Watch callback IP+port
 #    local a: ip_port = [$ip=payload$ip, $p=payload$port_] ;
