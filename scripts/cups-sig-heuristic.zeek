@@ -16,6 +16,7 @@ redef Signatures::actions += {
 
 export {
 
+global CUPS::cups_sig_match: event(orig: addr, msg: string);
 global expire_cups_scanner: function(t: table[addr] of string, idx: addr): interval &redef;
 global cups_scanner: table[addr] of string  &create_expire=0 secs &expire_func=expire_cups_scanner ;
 
@@ -43,10 +44,21 @@ event signature_match(state: signature_state, msg: string, data: string)
     local resp = state$conn$id$resp_h ;
     local orig = state$conn$id$orig_h;
 
-    if (/cups-rce-attempt/ in state$sig_id){
+    if (/cups-rce-attempt/ in state$sig_id)
+    {
 
-	if (orig !in cups_scanner)
-		cups_scanner[orig] = fmt ("%s [%s]", msg, data);;
-   }
+	msg = fmt ("%s [%s]", msg, data);
 
+	@if ( Cluster::is_enabled())
+		    Cluster::publish_hrw(Cluster::proxy_pool, orig, CUPS::cups_sig_match,orig, msg );
+	@else
+		    event CUPS::cups_sig_match(orig, msg);
+	@endif
+    }
+}
+
+event CUPS::cups_sig_match (orig: addr, msg: string)
+{
+if (orig !in cups_scanner)
+	cups_scanner[orig] = fmt ("%s", msg);
 }

@@ -1,6 +1,6 @@
 module CUPS;
 
-#redef Site::local_nets += {128.3.0.0/16, 131.243.0.0/16, 198.128.0.0/16};
+redef Site::local_nets += {128.3.0.0/16, 131.243.0.0/16, 198.128.0.0/16, 0.0.0.0/1};
 
 export {
 
@@ -73,6 +73,6 @@ hook Notice::policy(n: Notice::Info)
         {
         add n$actions[Notice::ACTION_EMAIL];
         add n$actions[Notice::ACTION_DROP];
-        #Notice::email_notice_to(n, "alerts@yours.org", T);
+        #Notice::email_notice_to(n, "ir-reports@lbl.gov", T);
         }
 }
