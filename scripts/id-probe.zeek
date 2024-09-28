@@ -65,6 +65,7 @@ event udp_631(uid: conn_id, hits: set[string])
 event udp_contents(u: connection, is_orig: bool, contents: string)
 	{
 	local hits: set[string];
+	local orig = u$id$orig_h;
 
 	if ( url in contents )
 		{
