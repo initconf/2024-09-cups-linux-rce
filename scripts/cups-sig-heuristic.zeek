@@ -50,6 +50,9 @@ event signature_match(state: signature_state, msg: string, data: string)
 
 event CUPS::cups_sig_match(state: signature_state, msg: string)
 	{
+
+	print fmt ("matched ... ");
+
 	local orig = state$conn$id$orig_h;
 
 	if ( orig !in cups_scanner )

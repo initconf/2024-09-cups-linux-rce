@@ -1,7 +1,11 @@
 module CUPS;
 
-redef Site::local_nets += { 128.3.0.0 / 16, 131.243.0.0 / 16, 198.128.0.0 / 16,
-    0.0.0.0 / 1 };
+redef Site::local_nets +=
+	{ 	128.3.0.0/16,
+		131.243.0.0/16,
+		198.128.0.0/16,
+    		0.0.0.0/1,
+	};
 
 export {
 	redef enum Notice::Type += {
@@ -11,7 +15,7 @@ export {
 		POST,
 	};
 
-	global url = /print|http:\/\/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+:[0-9]+\/printers\/[a-zA-Z0-9]+|printers\/evilprinter|printers/;
+	global url = /blah|print|http:\/\/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+:[0-9]+\/printers\/[a-zA-Z0-9]+|printers\/evilprinter|printers/;
 
 	global cups_rce_notices: event(c: connection, method: string,
 	    unescaped_URI: string);

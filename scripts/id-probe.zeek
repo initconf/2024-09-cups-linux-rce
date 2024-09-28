@@ -10,8 +10,9 @@ module CUPS;
 ## eg. it flags the following all for URI, callbackIP, callback_port
 ## and callback protocols
 
-## (i) http://134.122.95.96:12345/printers/evilprinter "location_field" "info_field"
-## (ii) 0000 0003 ipp://199.247.0.94:631/printers/test
+## (i)   http://134.122.95.96:12345/printers/evilprinter "location_field" "info_field"
+## (ii)  0000 0003 ipp://199.247.0.94:631/printers/test
+## (iii) 0000 0003 http://www.badwebsite.com:9000/its/bad/website
 
 export {
 	global udp_631: event(uid: conn_id, hits: set[string]);
@@ -21,45 +22,68 @@ export {
 		Probe,
 		ScannerIP,
 		CallbackIP,
+		CallbackDomain,
 	};
 }
 
 redef udp_content_delivery_ports_orig += { [ 631/udp ] = T };
 
-event udp_631(uid: conn_id, hits: set[string])
+event CUPS::udp_631(uid: conn_id, hits: set[string])
 	{
 	local scanner = uid$orig_h;
+	local callback: CallbackParts;
+
 	local callback_ip_port: string;
-	local callback_ip: addr;
-	local callback_port: port;
-	local callback_url: string;
+
+	local msg = fmt ("Scanner: %s ", scanner);
 
 	for ( link in hits )
+	{
+		msg += fmt ("link: %s ",link);
+
+		if (domain_regex in link)
+		{	local ph = extract_host (link);
+			callback$port_ = extract_port (link);
+
+			msg += fmt("callback_domain: %s, port: %s ", ph, callback$port_);
+
+			NOTICE([ $note=CUPS::CallbackDomain, $id=uid, $src=scanner,
+			$identifier=cat(scanner), $suppress_for=1hrs, $msg=msg ]);
+
+		}
+		else if (ip_regex in link)
 		{
-		callback_url = link;
-		callback_ip_port = split_string(link, /\//)[2];
-		callback_ip = to_addr(split_string(callback_ip_port, /:/)[0]);
-		callback_port = to_port(fmt("%s/tcp", split_string(callback_ip_port,/:/)[1]));
+		 	callback$ip = extract_ip (link);
+			callback$port_ = extract_port (link);
 		}
 
-	local msg = fmt("link %s, callback_url: %s, callback_ip: %s, port: %s", link,
-	    callback_url, callback_ip, callback_port);
+			callback$url = link;
+	}
 
-	if ( callback_ip == scanner )
+	msg += fmt ("callback_ip: %s callback_port: %s", callback$ip, callback$port_);
+
+	if ( callback$ip == scanner )
 		{
-		NOTICE([ $note=CUPS::Probe, $id=uid, $src=uid$orig_h,
+			NOTICE([ $note=CUPS::Probe, $id=uid, $src=uid$orig_h,
 			$identifier=cat( uid$orig_h), $suppress_for=1hrs, $msg=msg ]);
 		}
-	else
+	else if (callback$ip == 0.0.0.0)
 		{
 		# in this case we want to drop both ScannerIP and CallbackIP
 
+
 		NOTICE([ $note=CUPS::ScannerIP, $id=uid, $src=uid$orig_h,
 			$identifier=cat( uid$orig_h), $suppress_for=1hrs, $msg=msg ]);
-
-		NOTICE([ $note=CUPS::CallbackIP, $id=uid, $src=callback_ip,
-			$identifier=cat( callback_ip), $suppress_for=1hrs, $msg=msg ]);
 		}
+
+		NOTICE([ $note=CUPS::CallbackIP, $id=uid, $src=uid$orig_h,
+			$identifier=cat( uid$orig_h), $suppress_for=1hrs, $msg=msg ]);
+
+
+	event CUPS::build_intel(uid, callback);
+
+
+
 	}
 
 event udp_contents(u: connection, is_orig: bool, contents: string)
@@ -67,17 +91,19 @@ event udp_contents(u: connection, is_orig: bool, contents: string)
 	local hits: set[string];
 	local orig = u$id$orig_h;
 
-	if ( url in contents )
+
+
+	if ( url_regex in contents )
 		{
 		hits = find_all_urls(contents);
 		if ( |hits| > 0 )
-			{
+		{
 		@if ( Cluster::is_enabled() )
 			Cluster::publish_hrw(Cluster::proxy_pool, orig, CUPS::udp_631, u$id, hits);
 		@else
 			event CUPS::udp_631(u$id, hits);
 		@endif
-			}
+		}
 		}
 	}
 
