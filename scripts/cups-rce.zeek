@@ -1,12 +1,5 @@
 module CUPS;
 
-redef Site::local_nets +=
-	{ 	128.3.0.0/16,
-		131.243.0.0/16,
-		198.128.0.0/16,
-    		0.0.0.0/1,
-	};
-
 export {
 	redef enum Notice::Type += {
 		# Sensitive POST seen
