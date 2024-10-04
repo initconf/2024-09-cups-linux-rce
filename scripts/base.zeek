@@ -15,7 +15,7 @@ export {
                     domain: string &default ="";
                     };
 
-	global cups_attack: table[addr] of cups_attack_mo ;
+	#global cups_attack: table[addr] of cups_attack_mo ;
 }
 
 # Extracts URLs discovered in arbitrary text.
