@@ -16,12 +16,15 @@
 ##  tests in place
 
 ```
-% btest -A
+btest -A
 [  0%] cups-rce.callback ... ok
-[ 25%] cups-rce.cups-rce ... ok
-[ 50%] cups-rce.probe ... ok
-[ 75%] cups-rce.sigmatch ... ok
-all 4 tests successful
+[ 16%] cups-rce.callback-is-a-domain ... ok
+[ 33%] cups-rce.cups-rce ... ok
+[ 50%] cups-rce.different-uri ... ok
+[ 66%] cups-rce.probe ... ok
+[ 83%] cups-rce.sigmatch ... ok
+all 6 tests successful
+
 ```
 
 ## Detailed Notes:
