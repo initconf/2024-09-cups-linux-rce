@@ -1,8 +1,8 @@
 
-### =======================================================================
+## =======================================================================
 ## Simple policy to detect CUPS LINUX remote code execution vulnerability attempts and successes
-### https://www.evilsocket.net/2024/09/26/Attacking-UNIX-systems-via-CUPS-Part-I/
-### =======================================================================
+## https://www.evilsocket.net/2024/09/26/Attacking-UNIX-systems-via-CUPS-Part-I/
+## =======================================================================
 
 ## Following functionality are provided by the script
 --------------------------------------------------
